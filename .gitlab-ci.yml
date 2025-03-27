@@ -1,0 +1,52 @@
+stages:
+  - build-dep
+  - build
+
+build-ui:
+  stage: build-dep
+  image: reg.smvm.cn/appbase/node:18-alpine3.17
+  retry: 0
+  script:
+    - export HTTP_PROXY="http://clash-proxy.shimo.run:7890"
+    - export HTTPS_PROXY="http://clash-proxy.shimo.run:7890"
+    - export ALL_PROXY="socks5://clash-proxy.shimo.run:7890"
+    - ls -l
+    - chmod +x ./scripts/build/build_ui.sh && ./scripts/build/build_ui.sh
+    - ls -l ./ui/dist/
+  cache:
+    policy: push
+    untracked: true
+    key: build-ui-${CI_COMMIT_REF_SLUG}
+    paths:
+      - ./ui/dist/
+  tags:
+    - k8runner
+  only:
+    - dev
+
+
+
+build-linux-amd64:
+  stage: build
+  image: reg.smvm.cn/appbase/golang-build:1.23-alpine3.20
+  retry: 0
+  script:
+    - export HTTP_PROXY="http://clash-proxy.shimo.run:7890"
+    - export HTTPS_PROXY="http://clash-proxy.shimo.run:7890"
+    - export ALL_PROXY="socks5://clash-proxy.shimo.run:7890"
+    - ls -l
+    - export ARTIFACT_NAME=demo-x86_64-unknown-linux
+    - chmod +x ./scripts/build/build_pkg.sh && ./scripts/build/build_pkg.sh
+  cache:
+    - key: build-ui-${CI_COMMIT_REF_SLUG}
+      policy: pull
+      paths:
+        - ./ui/dist/
+  artifacts:
+    expire_in: 7 days
+    paths:
+      - ./demo-x86_64-unknown-linux.zip
+  tags:
+    - k8runner
+  only:
+    - dev

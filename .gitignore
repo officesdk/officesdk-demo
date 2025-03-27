@@ -1,0 +1,9 @@
+.idea/
+/bin/office-demo
+/logs/
+office-demo
+/pkg/consts/logs/
+/test-result/
+/leveldb/
+.gitlab-ci.yml
+Dockerfile
