@@ -32,5 +32,5 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            officesdk/office-demo:latest
-            officesdk/office-demo:${{ env.TAG_NAME }}
+            officesdkdev/officesdk-demo:latest
+            officesdkdev/officesdk-demo:${{ env.TAG_NAME }}
