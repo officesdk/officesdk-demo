@@ -1,12 +1,13 @@
 name: Release
 on:
-  push:
-    tags:
-      - "v**"
+  release:
+    types: [published]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: alpine:3.17
     strategy:
       matrix:
         include:
@@ -19,20 +20,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18"
+      - name: Install dependencies
+        run: |
+          apk add --no-cache \
+            nodejs=18.19.1 \
+            npm=9.8.1 \
+            go=1.21.7 \
+            git \
+            make \
+            gcc \
+            musl-dev
 
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.21"
-
-      - name: Configure Go
+      - name: Configure environment
         run: |
           go env -w GO111MODULE=on
           go env -w GOPROXY=https://goproxy.cn,direct
+          export TZ=Asia/Shanghai
 
       - name: Build UI
         run: |
@@ -52,7 +55,10 @@ jobs:
       - name: Create release package
         run: |
           mkdir -p release
-          tar -czf "release/officesdk-demo-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz" \
+          tar -czf "release/officesdk-demo-${{ github.event.release.tag_name }}-${{ matrix.platform }}.tar.gz" \
+            --exclude="node_modules" \
+            --exclude=".git" \
+            --exclude="dist" \
             data/*
 
       - name: Upload release asset
@@ -61,6 +67,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./release/officesdk-demo-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz"
-          asset_name: "officesdk-demo-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz"
+          asset_path: "./release/officesdk-demo-${{ github.event.release.tag_name }}-${{ matrix.platform }}.tar.gz"
+          asset_name: "officesdk-demo-${{ github.event.release.tag_name }}-${{ matrix.platform }}.tar.gz"
           asset_content_type: "application/gzip" 
