@@ -22,8 +22,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "18"
-          cache: "npm"
-          cache-dependency-path: "ui/package-lock.json"
+          cache: "yarn"
+          cache-dependency-path: "ui/yarn.lock"
 
       - name: Setup Go
         uses: actions/setup-go@v5
@@ -37,10 +37,8 @@ jobs:
 
       - name: Build UI
         run: |
-          cd ui
-          npm install
-          chmod +x ../scripts/build/build_ui.sh
-          ../scripts/build/build_ui.sh
+          chmod +x ./scripts/build/build_ui.sh
+          ./scripts/build/build_ui.sh
 
       - name: Build Backend
         env:
