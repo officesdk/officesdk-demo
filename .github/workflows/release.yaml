@@ -40,8 +40,9 @@ jobs:
 
       - name: Build UI
         run: |
-          chmod +x ./scripts/build/build_ui.sh
-          ./scripts/build/build_ui.sh
+          cd ui
+          chmod +x ../scripts/build/build_ui.sh
+          ../scripts/build/build_ui.sh
 
       - name: Build Backend
         env:
