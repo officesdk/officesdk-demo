@@ -55,11 +55,12 @@ jobs:
       - name: Create release package
         run: |
           mkdir -p release
-          tar -czf "release/officesdk-demo-${{ github.event.release.tag_name }}-${{ matrix.platform }}.tar.gz" \
+          cd data
+          tar -czf "../release/officesdk-demo-${{ github.event.release.tag_name }}-${{ matrix.platform }}.tar.gz" \
             --exclude="node_modules" \
             --exclude=".git" \
             --exclude="dist" \
-            data/*
+            *
 
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
