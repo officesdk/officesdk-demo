@@ -12,7 +12,7 @@ RUN chmod +x ./build_ui.sh && ./build_ui.sh
 FROM golang:1.21-alpine3.17 AS builder
 
 ENV GO111MODULE=on
-ENV GOPROXY=https://goproxy.cn,direct
+# ENV GOPROXY=https://goproxy.cn,direct
 
 ENV TZ Asia/Shanghai
 WORKDIR /app
