@@ -1,0 +1,71 @@
+name: Release
+on:
+  push:
+    tags:
+      - "v**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - platform: linux-amd64
+            arch: amd64
+          - platform: linux-arm64
+            arch: arm64
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+          check-latest: true
+          env:
+            GO111MODULE: on
+            GOPROXY: https://goproxy.cn,direct
+
+      - name: Build UI
+        working-directory: ui
+        run: |
+          npm ci
+          chmod +x ../scripts/build/build_ui.sh
+          ../scripts/build/build_ui.sh
+
+      - name: Build Backend
+        env:
+          TARGETOS: linux
+          TARGETARCH: ${{ matrix.arch }}
+        run: |
+          chmod +x ./scripts/build/build_pkg.sh
+          ./scripts/build/build_pkg.sh
+
+      - name: Create release package
+        run: |
+          mkdir -p dist
+          tar -czf dist/officesdk-demo-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz \
+            --exclude="node_modules" \
+            --exclude=".git" \
+            --exclude="dist" \
+            data/* \
+            scripts/command/* \
+            start.sh
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./dist/officesdk-demo-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz
+          asset_name: officesdk-demo-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz
+          asset_content_type: application/gzip 
