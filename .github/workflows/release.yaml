@@ -38,7 +38,7 @@ jobs:
       - name: Build UI
         working-directory: ui
         run: |
-          npm ci
+          npm install
           chmod +x ../scripts/build/build_ui.sh
           ../scripts/build/build_ui.sh
 
