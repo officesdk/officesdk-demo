@@ -12,8 +12,8 @@ jobs:
         include:
           - platform: linux-amd64
             arch: amd64
-          - platform: linux-arm64
-            arch: arm64
+          # - platform: linux-arm64
+          #   arch: arm64
 
     steps:
       - name: Checkout repository
@@ -54,13 +54,7 @@ jobs:
         run: |
           mkdir -p release
           tar -czf "release/officesdk-demo-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz" \
-            --exclude="node_modules" \
-            --exclude=".git" \
-            --exclude="dist" \
-            ui/dist \
-            data/* \
-            scripts/command/* \
-            start.sh
+            data/*
 
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
