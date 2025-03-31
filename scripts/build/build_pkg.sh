@@ -3,8 +3,8 @@ set -e
 
 export CGO_ENABLED=0
 export GOOS=$TARGETOS
-#export GOARCH=$TARGETARCH
-export GOARCH=amd64
+export GOARCH=$TARGETARCH
+#export GOARCH=amd64
 export APP=office-demo
 
 apk add --no-cach bash make git && make build
