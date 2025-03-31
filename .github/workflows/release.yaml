@@ -36,8 +36,8 @@ jobs:
           go env -w GOPROXY=https://goproxy.cn,direct
 
       - name: Build UI
-        working-directory: ui
         run: |
+          cd ui
           npm install
           chmod +x ../scripts/build/build_ui.sh
           ../scripts/build/build_ui.sh
@@ -52,11 +52,12 @@ jobs:
 
       - name: Create release package
         run: |
-          mkdir -p dist
-          tar -czf "dist/officesdk-demo-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz" \
+          mkdir -p release
+          tar -czf "release/officesdk-demo-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz" \
             --exclude="node_modules" \
             --exclude=".git" \
             --exclude="dist" \
+            ui/dist \
             data/* \
             scripts/command/* \
             start.sh
@@ -67,6 +68,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: "./dist/officesdk-demo-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz"
+          asset_path: "./release/officesdk-demo-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz"
           asset_name: "officesdk-demo-${{ github.ref_name }}-${{ matrix.platform }}.tar.gz"
           asset_content_type: "application/gzip" 
