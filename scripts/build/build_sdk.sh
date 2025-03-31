@@ -3,8 +3,8 @@ set -ex
 RELEASE_TAG="version-0.0.1-beta31"
 REPO_OWNER="officesdk"
 REPO_NAME="officesdk"
-FILE_NAME="${TARGETOS}-${TARGETARCH}.zip"
-#FILE_NAME="${TARGETOS}-amd64.zip"
+#FILE_NAME="${TARGETOS}-${TARGETARCH}.zip"
+FILE_NAME="${TARGETOS}-amd64.zip"
 
 ROOT_URL="http://127.0.0.1:9101"
 CALLBACK_URL="http://127.0.0.1:8080"
