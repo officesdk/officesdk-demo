@@ -1,4 +1,3 @@
-[server]
 [server.demo.http]
 enableAccessInterceptor = false
 enableAccessInterceptorRes = false

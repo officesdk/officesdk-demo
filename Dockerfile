@@ -35,15 +35,7 @@ ENV TRIAL_ENV docker
 
 WORKDIR /data
 
-RUN mkdir ./demo && mkdir ./sdk
-
-COPY ./scripts/build/build_sdk.sh ./sdk
-RUN chmod +x ./sdk/build_sdk.sh && ./sdk/build_sdk.sh && rm -rf ./sdk/build_sdk.sh
-
-
-COPY --from=builder /app/data/* ./demo/
-
-COPY ./scripts/command/* ./
+COPY --from=builder /app/data/* ./
 
 EXPOSE 9001
 EXPOSE 8080
