@@ -1,3 +1,4 @@
+#!/bin/sh
 set -ex
 
 RELEASE_TAG="version-0.0.1-beta36"
