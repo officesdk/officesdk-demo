@@ -1,0 +1,15 @@
+[server]
+[server.demo.http]
+enableAccessInterceptor = true
+enableAccessInterceptorRes = true
+port = 9301
+
+[leveldb]
+path = "/Users/xuyixian/GolandProjects/turbo-demo/leveldb"
+
+[host]
+downloadUrlPrefix = "http://172.16.21.165:9301"
+previewUrlPrefix = "http://172.16.21.165:9001"
+
+[case]
+resourcePath = "./resource"
