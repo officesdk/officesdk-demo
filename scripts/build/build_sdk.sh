@@ -1,7 +1,7 @@
 #!/bin/sh
 set -ex
 
-RELEASE_TAG="version-0.0.1-beta36"
+RELEASE_TAG="version-0.0.1-beta38"
 REPO_OWNER="officesdk"
 REPO_NAME="officesdk"
 FILE_NAME="${TARGETOS}-${TARGETARCH}.zip"
