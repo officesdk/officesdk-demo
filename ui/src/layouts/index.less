@@ -1,0 +1,88 @@
+body {
+  margin: 0;
+}
+
+.Layout {
+  height: 100vh;
+  width: 100vw;
+
+  .Header {
+    padding: 0 28px;
+    background: #fff;
+    border-bottom: 1px solid #eaeaea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+
+    .Introduce {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+
+      img {
+        width: 45px;
+        height: 55px;
+        margin-right: 10px;
+      }
+
+      .Title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+
+    .Lang {
+      color: #4f5866;
+      font-size: 13px;
+      line-height: 16px;
+      text-decoration: none;
+      transition: all .3s;
+      cursor: pointer;
+    }
+  }
+
+  .Sider {
+    background: #fff;
+    border-inline-end: 1px solid #eaeaea;
+    padding: 20px 0;
+
+    :global {
+      .ant-menu {
+        border-inline-end: none;
+        background: #fff;
+
+        .ant-menu-item {
+          padding-left: 24px;
+          font-size: 15px;
+          color: #0000009a;
+        }
+
+        .ant-menu-item-selected {
+          background-color: #00000010;
+          color: #000;
+        }
+      }
+    }
+  }
+
+  .Content {
+    background: #fff;
+    height: 100%;
+    overflow: hidden;
+
+    .Title {
+      border-bottom: 1px solid #eaeaea;
+      padding: 25px 20px 10px 30px;
+      font-size: 22px;
+      font-weight: 400;
+    }
+
+    .Body {
+      height: calc(100% - 70px);
+      padding: 15px;
+      overflow: auto;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+[server]
+[server.demo.http]
+enableAccessInterceptor = false
+enableAccessInterceptorRes = false
+port = 8080
+embedPath = "dist"
+
+[leveldb]
+path = "./leveldb"
+
+[host]
+downloadUrlPrefix = "http://172.16.21.165:8080"
+previewUrlPrefix = "http://172.16.21.165:9001"
+
+[case]
+resourcePath = "./resource"
+filepath = "./files"
