@@ -19,12 +19,12 @@ There are two ways to run the demo:
 
 1. Pull the Docker image:
 ```bash
-docker pull officesdkdev/officesdk-demo:v1.0.1
+docker pull officesdkdev/officesdk-demo:v0.0.2
 ```
 
 2. Run the container:
 ```bash
-docker run -it -p 9101:9101 -p 9102:9102 -p 8080:8080 officesdkdev/officesdk-demo:v1.0.1
+docker run -it -p 9101:9101 -p 9102:9102 -p 8080:8080 officesdkdev/officesdk-demo:v0.0.2
 ```
 
 3. Download the license file:
