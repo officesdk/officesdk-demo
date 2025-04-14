@@ -1,0 +1,16 @@
+export default {
+  'title': 'Office SDK Demo',
+  'showcase.to': 'Jump to {text} preview',
+  'action.list.showcase': 'Showcase',
+  'action.list.action': 'Action',
+  'action.list.name': 'File Name',
+  'action.list.createTime': 'Create Time',
+  'action.list.preview': 'Preview',
+  'action.list.delete': 'Delete',
+  'action.upload': 'Upload File',
+  'action.upload.success': 'Upload Success',
+  'delete': 'Delete',
+  'delete.confirm': 'Confirm Delete?',
+  'confirm': 'Confirm',
+  'cancel': 'Cancel',
+}
