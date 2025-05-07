@@ -1,0 +1,73 @@
+name: Release
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    strategy:
+      matrix:
+        include:
+          - platform: linux-amd64
+            arch: amd64
+          - platform: linux-arm64
+            arch: arm64
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "yarn"
+          cache-dependency-path: "ui/yarn.lock"
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.21"
+
+      - name: Configure environment
+        run: |
+          go env -w GO111MODULE=on
+          export TZ=Asia/Shanghai
+
+      - name: Build UI
+        run: |
+          cd ui
+          chmod +x ../scripts/build/build_ui.sh
+          ../scripts/build/build_ui.sh
+
+      - name: Build Backend
+        env:
+          TARGETOS: "linux"
+          TARGETARCH: ${{ matrix.arch }}
+        run: |
+          chmod +x ./scripts/build/build_pkg.sh
+          ./scripts/build/build_pkg.sh
+
+      - name: Create release package
+        run: |
+          mkdir -p release
+          cd data
+          tar -czf "../release/officesdk-demo-${{ github.event.release.tag_name }}-${{ matrix.platform }}.tar.gz" \
+            --exclude="node_modules" \
+            --exclude=".git" \
+            --exclude="dist" \
+            *
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "./release/officesdk-demo-${{ github.event.release.tag_name }}-${{ matrix.platform }}.tar.gz"
+          asset_name: "officesdk-demo-${{ github.event.release.tag_name }}-${{ matrix.platform }}.tar.gz"
+          asset_content_type: "application/gzip" 

@@ -1,0 +1,8 @@
+.idea/
+/bin/turbo-demo
+/logs/
+turbo-demo
+/pkg/consts/logs/
+/test-result/
+/leveldb/
+/files/*

@@ -1,0 +1,25 @@
+[awos]
+accessKeyId = "minioadmin"
+accessKeySecret = "minioadmin"
+bucket = "officesdk"
+endpoint = "http://127.0.0.1:9000"
+region = "us-east-1"
+
+[jwt]
+secret = "demo-test-jwt"
+
+[server.demo.http]
+enableAccessInterceptor = false
+enableAccessInterceptorRes = false
+port = 8080
+embedPath = "dist"
+
+[leveldb]
+path = "./leveldb"
+
+[host]
+downloadUrlPrefix = "http://127.0.0.1:8080"
+previewUrlPrefix = "http://127.0.0.1:9101/v1"
+
+[case]
+resourcePath = "./resource"
